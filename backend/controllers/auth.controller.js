@@ -2,6 +2,7 @@ import User from "../../backend/models/user.model.js";
 import bcryptjs from "bcryptjs";
 import {generateTokenAndSetCookie} from "../../backend/utils/generateTokenAndSetCookie.js";
 import crypto from "crypto";
+import {sendVerificationEmail} from "../../backend/mailtrap/emails.js";
 
 export const signup = async (req, res) => {
     const {email,name,password} = req.body;
@@ -16,7 +17,7 @@ export const signup = async (req, res) => {
         }
 
         const hashedPassword = await bcryptjs.hash(password,10);
-        const verificationToken = crypto.randomBytes(32).toString("hex");
+        const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
         const verificationExpiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
         const user = await User.create({
@@ -28,6 +29,9 @@ export const signup = async (req, res) => {
         });
 
         generateTokenAndSetCookie(res,user._id);
+
+        await sendVerificationEmail(user.email,verificationToken);
+
 
         res
             .status(201)
@@ -49,3 +53,4 @@ export const signin = async (req, res) => {
 export const logout = async (req, res) => {
     res.send("logout");
 }
+
