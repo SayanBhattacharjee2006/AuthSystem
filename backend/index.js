@@ -12,6 +12,9 @@ app.get("/", (req, res) => {
     res.send("Hello Worldieeeeeeeee");
 })
 
+
+app.use(express.json());
+
 app.use("/api/auth",authRouter)
 
 
