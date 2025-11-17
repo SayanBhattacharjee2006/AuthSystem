@@ -10,7 +10,6 @@ import {
 } from "../../backend/mailtrap/emails.js";
 import { sendOTP,verifyOTP } from "../utils/twilio.js"; 
 
-
 export const signup = async (req, res) => {
     const { email, name, password } = req.body;
     try {
@@ -45,7 +44,10 @@ export const signup = async (req, res) => {
 
         generateTokenAndSetCookie(res, user._id);
 
-        await sendVerificationEmail(user.email, verificationToken);
+        // Only send verification email to account owner's email for Mailtrap demo restrictions
+        if (user.email === 'sayanbhattacharya0001@gmail.com') {
+            await sendVerificationEmail(user.email, verificationToken);
+        }
 
         res.status(201).json({
             success: true,

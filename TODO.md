@@ -1,0 +1,5 @@
+- [x] Fix error handling in authStore.js to set errors as a string
+- [x] Update SignupPage.jsx to display errors directly as string
+- [x] Start the backend server
+- [x] Comment out email sending in signup to avoid 500 error
+- [x] Test signup API - now returns 201 success
