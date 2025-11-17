@@ -9,13 +9,41 @@ function EmailVerificationPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
     };
 
-    const handleKeyDown = (e, index) => {
-    }
-
-    const  handleChange = (e, index) => {
+    const handleKeyDown = (index,e) => {
+        if(e.key === "Backspace" && !code[index] && index > 0){
+            inputRefs.current[index - 1].focus();
+        }
     };
+    
+    const  handleChange = ( index, value) => {
+        const newCode = [...code]; // Create a copy of the code array
+
+        if( value.length > 1){
+            const pastedCode = value.split("");// Split the pasted value into an array of characters
+            for (let i = 0; i < pastedCode.length; i++) {
+                newCode[index + i] = pastedCode[i]; // Assign the characters to the corresponding positions in the newCode array
+            }
+            setCode(newCode); // Update the state with the new code array
+            const lastFilledIndex = newCode.findLastIndex((digit) => digit !== ""); // Find the index of the last filled digit
+            const focusIndex = lastFilledIndex < 5 ? lastFilledIndex + 1 : 5; // Calculate the index to focus on
+            inputRefs.current[focusIndex].focus(); // Focus on the next input field
+        } else {
+            newCode[index] = value; // Assign the value to the corresponding position in the newCode array
+            setCode(newCode); // Update the state with the new code array
+            if(value && index < 5){
+                inputRefs.current[index + 1].focus();// Focus on the next input field
+            }
+        }
+    };
+
+    useEffect(() => {
+		if (code.every((digit) => digit !== "")) {
+			// handleSubmit(new Event("submit"));
+		}
+	}, [code]);
 
     return (
         <div className="max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden">
@@ -52,8 +80,8 @@ function EmailVerificationPage() {
 						whileHover={{ scale: 1.05 }}
 						whileTap={{ scale: 0.95 }}
 						type='submit'
-						disabled={isLoading || code.some((digit) => !digit)}
-						className='w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50'
+						// disabled={isLoading || code.some((digit) => !digit)}
+						className='w-full bg-linear-to-r from-green-500 to-emerald-600 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 disabled:opacity-50'
 					>
 						Verify Email
 					</motion.button>

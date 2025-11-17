@@ -2,7 +2,7 @@ import FloatingShape from "./components/FloatingShape.jsx"
 import LoginPage from "./pages/LoginPage.jsx"
 import SignupPage from "./pages/SignupPage.jsx"
 import { Routes, Route } from "react-router-dom"
-import { EmailVerificationPage } from "./pages/EmailVerificationPage.jsx"
+import EmailVerificationPage  from "./pages/EmailVerificationPage.jsx"
 
 function App() {
 
