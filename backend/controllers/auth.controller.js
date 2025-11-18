@@ -109,7 +109,6 @@ export const logout = async (req, res) => {
         message: "User logged out successfully",
     });
 };
-
 export const verifyEmail = async (req, res) => {
     const { code } = req.body;
 
@@ -138,7 +137,6 @@ export const verifyEmail = async (req, res) => {
         });
     } catch (error) {}
 };
-
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
     try {
@@ -170,7 +168,6 @@ export const forgotPassword = async (req, res) => {
         console.log("Error in forgotPassword: ", error);
     }
 };
-
 export const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { password } = req.body;
@@ -198,7 +195,6 @@ export const resetPassword = async (req, res) => {
         console.log("Error in resetPassword: ", error);
     }
 };
-
 export const checkAuth = async (req, res) => {
     try {
         const user = await User.findById(req.userId).select("-password");
@@ -220,8 +216,6 @@ export const checkAuth = async (req, res) => {
         });
     }
 };
-
-
 export const sendOtpController = async (req, res) => {
   try {
     const { phone } = req.body;
@@ -240,7 +234,6 @@ export const sendOtpController = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong", error });
   }
 };
-
 export const verifyOtpController = async (req, res) => {
   try {
     const { phone, otp } = req.body;
